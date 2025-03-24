@@ -12,9 +12,9 @@
             	"plugin/req-resp-modifier": {
               		"name":["deprecated-header"],
 					"deprecated-header": {
-						"deprecated": "@1742777497",
-						"link": "<https://docs.myhost.com/api/deprecations>; rel=\"deprecation\"; type=\"text/html\"",
-						"sunset": "Thu, 01 Jan 2026 00:00:00 UTC"
+						{{- with $operation.deprecated_at -}}"deprecated": "{{- $operation.deprecated_at -}}",{{end}}
+						{{- with $operation.deprecated_link -}}"link": "{{- $operation.deprecated_link -}}",{{end}}
+						{{- with $operation.deprecated_sunset -}}"sunset": "{{- $operation.deprecated_sunset -}}"{{end}}
 					}
             	}
           	}
