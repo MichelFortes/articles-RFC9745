@@ -1,0 +1,10 @@
+services:
+  backend:
+    image: michelfortes/httpbin:latest
+
+  krakend:
+    build:
+      context: ./build/krakend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"

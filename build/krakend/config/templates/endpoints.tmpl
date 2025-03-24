@@ -1,0 +1,24 @@
+{{ range $index, $operation := .operations.list }}
+	{{if $index}},{{end}}
+	{
+		"endpoint": "{{- $operation.path -}}",
+		"method": "{{- $operation.method -}}",
+		"output_encoding": "no-op",
+		"backend": [
+		{
+			"url_pattern": "{{- $operation.backend.path -}}",
+			"host": [ "{{- $operation.backend.host -}}" ],
+			"extra_config":{
+            	"plugin/req-resp-modifier": {
+              		"name":["deprecated-header"],
+					"deprecated-header": {
+						"deprecated": "@1742777497",
+						"link": "<https://docs.myhost.com/api/deprecations>; rel=\"deprecation\"; type=\"text/html\"",
+						"sunset": "Thu, 01 Jan 2026 00:00:00 UTC"
+					}
+            	}
+          	}
+		}
+		]
+	}
+{{end}}

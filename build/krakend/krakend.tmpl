@@ -1,0 +1,10 @@
+{
+    "version": 3,
+	"plugin": {
+		"pattern":".so",
+		"folder": "/opt/krakend/plugins/"	
+	},
+	"endpoints": [
+		{{- template "endpoints.tmpl" . -}}
+	]
+}
