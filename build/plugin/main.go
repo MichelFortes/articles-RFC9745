@@ -53,26 +53,9 @@ func (r registerer) responseHandler(
 		}
 	}
 
-	cfgDeprecated, ok := config["deprecated"].(string)
-	if !ok {
-		return func(input interface{}) (interface{}, error) {
-			return input, errors.New("missing deprecated-header 'deprecated' config")
-		}
-	}
-
-	cfgSunset, ok := config["sunset"].(string)
-	if !ok {
-		return func(input interface{}) (interface{}, error) {
-			return input, errors.New("missing deprecated-header 'sunset' config")
-		}
-	}
-
-	cfgLink, ok := config["link"].(string)
-	if !ok {
-		return func(input interface{}) (interface{}, error) {
-			return input, errors.New("missing deprecated-header 'link' config")
-		}
-	}
+	cfgDeprecated, hasDeprecated := config["deprecated"].(string)
+	cfgSunset, hasSunset := config["sunset"].(string)
+	cfgLink, hasLink := config["link"].(string)
 
 	return func(input interface{}) (interface{}, error) {
 
@@ -82,10 +65,15 @@ func (r registerer) responseHandler(
 		}
 
 		if resp.Headers() != nil {
-
-			resp.Headers()["Deprecated"] = []string{cfgDeprecated}
-			resp.Headers()["Sunset"] = []string{cfgSunset}
-			resp.Headers()["Link"] = []string{cfgLink}
+			if hasDeprecated {
+				resp.Headers()["Deprecated"] = []string{cfgDeprecated}
+			}
+			if hasSunset {
+				resp.Headers()["Sunset"] = []string{cfgSunset}
+			}
+			if hasLink {
+				resp.Headers()["Link"] = []string{cfgLink}
+			}
 		}
 
 		return input, nil
