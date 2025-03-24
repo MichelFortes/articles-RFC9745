@@ -29,7 +29,7 @@
       "method": "delete",
       "deprecated_at": "@1751327999",
       "deprecated_link": "https://api.example.com/deprecation-policy",
-      "deprecated_sunset": "Wed, 01 Jan 2025 00:00:00 UTC",
+      "deprecated_sunset": "Wed, 01 Jan 2026 00:00:00 UTC",
       "backend": {
         "path": "/users/{userId}",
         "host": "http://backend:8888"
