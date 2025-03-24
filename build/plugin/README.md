@@ -5,7 +5,9 @@
 
 ## AMD64
 ```bash
-docker run -it -v "$PWD:/app" -w /app krakend/builder:2.9.3 go build -buildmode=plugin -o deprecated-header.so .
+docker run -it -v "$PWD:/app" -w /app \
+krakend/builder:2.9.3 \
+go build -buildmode=plugin -o deprecated-header.so .
 ```
 
 ## ARM64
