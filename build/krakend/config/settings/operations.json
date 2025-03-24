@@ -1,20 +1,39 @@
 {
-	"list": [
-		{
-			"path": "/v1/customers",
-			"method": "GET",
-			"backend": {
-				"path": "/customers",
-				"host": "http://backend:8888"
-			}
-		},
-		{
-			"path": "/v1/products",
-			"method": "GET",
-			"backend": {
-				"path": "/products",
-				"host": "http://backend:8888"
-			}
-		}
-	]
+  "list": [
+    {
+      "path": "/users",
+      "method": "get",
+      "backend": {
+        "path": "/users",
+        "host": "http://backend:8888"
+      }
+    },
+    {
+      "path": "/users",
+      "method": "post",
+      "backend": {
+        "path": "/users",
+        "host": "http://backend:8888"
+      }
+    },
+    {
+      "path": "/users/{userId}",
+      "method": "get",
+      "backend": {
+        "path": "/users/{userId}",
+        "host": "http://backend:8888"
+      }
+    },
+    {
+      "path": "/users/{userId}",
+      "method": "delete",
+      "deprecated_at": "@1751327999",
+      "deprecated_link": "https://api.example.com/deprecation-policy",
+      "deprecated_sunset": "Wed, 01 Jan 2025 00:00:00 UTC",
+      "backend": {
+        "path": "/users/{userId}",
+        "host": "http://backend:8888"
+      }
+    }
+  ]
 }
