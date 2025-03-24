@@ -56,5 +56,5 @@ paths:
         "204":
           description: User deleted successfully
       x-deprecated-at: "2025-06-30T23:59:59Z"
-      x-deprecated-sunset: "2025-01-01T00:00:00Z"
+      x-deprecated-sunset: "2026-01-01T00:00:00Z"
       x-deprecated-link: https://api.example.com/deprecation-policy
