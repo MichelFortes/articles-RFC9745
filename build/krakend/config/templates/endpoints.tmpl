@@ -13,7 +13,7 @@
               		"name":["deprecated-header"],
 					"deprecated-header": {
 						{{- with $operation.deprecated_at -}}"deprecated": "{{- $operation.deprecated_at -}}",{{end}}
-						{{- with $operation.deprecated_link -}}"link": "{{- $operation.deprecated_link -}}",{{end}}
+						{{- with $operation.deprecated_link -}}"link": "<{{- $operation.deprecated_link -}}>; rel=\"deprecation\"; type=\"text/html\"",{{end}}
 						{{- with $operation.deprecated_sunset -}}"sunset": "{{- $operation.deprecated_sunset -}}"{{end}}
 					}
             	}
