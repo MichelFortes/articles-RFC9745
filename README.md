@@ -1,4 +1,4 @@
-# Article: RFC 9754 and its impact on API governance
+# Article: RFC 9745 and its impact on API governance
 
 ## Project Structure
 
