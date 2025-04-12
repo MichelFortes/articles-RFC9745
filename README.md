@@ -1,6 +1,4 @@
-# RFC  9754 and its impact on API governance
-
-> This repository is part of the [article about RFC 9745](https://medium.com/@michelpbfortes/rfc-9754-and-its-impact-on-api-governance-d164ff87e777)
+# Article: RFC 9754 and its impact on API governance
 
 ## Project Structure
 
