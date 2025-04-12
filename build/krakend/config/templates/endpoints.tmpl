@@ -5,20 +5,20 @@
 		"method": "{{- $operation.method -}}",
 		"output_encoding": "no-op",
 		"backend": [
-		{
-			"url_pattern": "{{- $operation.backend.path -}}",
-			"host": [ "{{- $operation.backend.host -}}" ],
-			"extra_config":{
-            	"plugin/req-resp-modifier": {
-              		"name":["deprecated-header"],
-					"deprecated-header": {
-						{{- with $operation.deprecated_at -}}"deprecated": "{{- $operation.deprecated_at -}}",{{end}}
-						{{- with $operation.deprecated_link -}}"link": "<{{- $operation.deprecated_link -}}>; rel=\"deprecation\"; type=\"text/html\"",{{end}}
-						{{- with $operation.deprecated_sunset -}}"sunset": "{{- $operation.deprecated_sunset -}}"{{end}}
-					}
-            	}
-          	}
+			{
+				"url_pattern": "{{- $operation.backend.path -}}",
+				"host": [ "{{- $operation.backend.host -}}" ]
+			}
+		],
+		"extra_config":{
+			{{ if $operation.deprecated }}
+			"modifier/lua-proxy": {
+				"sources": [
+					"/opt/krakend/plugins/deprecated-headers.lua"
+				],
+          		"post": "add_deprecated_headers(\"{{- $operation.deprecated.at -}}\", \"{{- $operation.deprecated.link -}}\", \"{{- $operation.deprecated.sunset -}}\")"
+			}
+			{{end}}
 		}
-		]
 	}
 {{end}}

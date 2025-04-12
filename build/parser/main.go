@@ -13,18 +13,50 @@ const extensionDeprecatedAt = "x-deprecated-at"
 const extensionDeprecatedLink = "x-deprecated-link"
 const extensionDeprecatedSunset = "x-deprecated-sunset"
 
+type Deprecated struct {
+	At     string `json:"at,omitempty"`
+	Link   string `json:"link,omitempty"`
+	Sunset string `json:"sunset,omitempty"`
+}
+
 type Backend struct {
 	Path string `json:"path"`
 	Host string `json:"host"`
 }
 
 type Operation struct {
-	Path             string  `json:"path"`
-	Method           string  `json:"method"`
-	DeprecatedAt     string  `json:"deprecated_at,omitempty"`
-	DeprecatedLink   string  `json:"deprecated_link,omitempty"`
-	DeprecatedSunset string  `json:"deprecated_sunset,omitempty"`
-	Backend          Backend `json:"backend"`
+	Path       string     `json:"path"`
+	Method     string     `json:"method"`
+	Deprecated Deprecated `json:"deprecated,omitempty"`
+	Backend    Backend    `json:"backend"`
+}
+
+func (o Operation) MarshalJSON() ([]byte, error) {
+
+	d := o.Deprecated
+	if d.At == "" && d.Link == "" && d.Sunset == "" {
+		return json.Marshal(struct {
+			Path    string  `json:"path"`
+			Method  string  `json:"method"`
+			Backend Backend `json:"backend"`
+		}{
+			Path:    o.Path,
+			Method:  o.Method,
+			Backend: o.Backend,
+		})
+	}
+
+	return json.Marshal(struct {
+		Path       string     `json:"path"`
+		Method     string     `json:"method"`
+		Deprecated Deprecated `json:"deprecated"`
+		Backend    Backend    `json:"backend"`
+	}{
+		Path:       o.Path,
+		Method:     o.Method,
+		Deprecated: d,
+		Backend:    o.Backend,
+	})
 }
 
 type OperationsList struct {
@@ -74,8 +106,9 @@ func main() {
 			operation := operationPair.Value()
 
 			kdOp := Operation{
-				Path:   path,
-				Method: method,
+				Path:       path,
+				Method:     method,
+				Deprecated: Deprecated{},
 				Backend: Backend{
 					Host: "http://backend:8888",
 					Path: path,
@@ -88,15 +121,15 @@ func main() {
 					fmt.Printf("Error: Unable to parse deprecated_at timestamp: %v\n", err)
 					os.Exit(1)
 				}
-				kdOp.DeprecatedAt = fmt.Sprintf("@%d", depAt)
+				kdOp.Deprecated.At = fmt.Sprintf("@%d", depAt)
 			}
 
 			if nodeDepLink, present := operation.Extensions.Get(extensionDeprecatedLink); present {
-				kdOp.DeprecatedLink = nodeDepLink.Value
+				kdOp.Deprecated.Link = nodeDepLink.Value
 			}
 
 			if nodeDepSunset, present := operation.Extensions.Get(extensionDeprecatedSunset); present {
-				kdOp.DeprecatedSunset, err = getRFC1123FromTimestampRFC3339(nodeDepSunset.Value)
+				kdOp.Deprecated.Sunset, err = getRFC1123FromTimestampRFC3339(nodeDepSunset.Value)
 				if err != nil {
 					fmt.Printf("Error: Unable to parse deprecated_sunset timestamp: %v\n", err)
 					os.Exit(1)
