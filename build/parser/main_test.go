@@ -79,7 +79,7 @@ func TestMainFunction(t *testing.T) {
 	// Mock input files
 	tempDir := t.TempDir()
 	definitionPath := fmt.Sprint(tempDir, "/test_definition.json")
-	templateDestination := fmt.Sprint(tempDir, "test_output.json")
+	templateDestination := fmt.Sprint(tempDir, "/test_output.json")
 
 	definitionContent := `{
 		"openapi": "3.1.1",
