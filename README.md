@@ -1,5 +1,9 @@
 # Article: RFC 9745 and its impact on API governance
 
+## Introduction
+
+This project is part of a research article on the impact of RFC 9745 on API governance. RFC 9745 introduces guidelines for managing API deprecations and sunsets, ensuring better communication with API consumers. This project includes a Go-based parser that processes OpenAPI specifications and generates a Krakend configuration file. The generated configuration file is then used to run a Krakend API Gateway, which serves as an API proxy. The project demonstrates how to handle deprecated API operations and communicate deprecation policies effectively.
+
 ## Project Structure
 
 ```bash
@@ -35,12 +39,16 @@
 
 To run the project using Docker Compose, follow these steps:
 
-1. Ensure you have Docker and Docker Compose installed on your system.
-3. Start the services using Docker Compose (rebuilding the project every time):
+1. **Prerequisites**:
+   - Ensure you have Docker and Docker Compose installed on your system.
+   - Verify that the `docker-compose.yaml` file is correctly configured for your environment.
+
+2. **Start the Services**:
+   Start the services using Docker Compose (rebuilding the project every time):
    ```bash
    docker-compose up --build
    ```
-4. The services will start, and you can access them as defined in the `docker-compose.yaml` file.
+3. The services will start, and you can access them as defined in the `docker-compose.yaml` file.
 
 To stop the services, press `Ctrl+C` and run:
 ```bash
@@ -64,7 +72,9 @@ X-Krakend: Version 2.9.3
 X-Krakend-Completed: false
 ```
 
-DEPRECATED operation example
+### DEPRECATED operation example
+
+Request
 ```bash
 curl -i -X DELETE localhost:8080/users/1
 ```
